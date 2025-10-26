@@ -1,0 +1,76 @@
+namespace ConsoleApp42
+{
+    public class Player
+    {
+        //поля
+        private int level;
+        private int health;
+        //авто-свойство
+        public string Name { get; set; }
+        // свойства с проверкой диапозона
+        public int Level
+        {
+            get => level;
+            set
+            {
+                if (value < 1 || value > 100)
+                {
+                    throw new ArgumentException();
+                }
+                level = value;
+            }
+        }
+        public int Health
+        {
+            get => health;
+            set
+            {
+                if (value < 1 || value > 100)
+                {
+                    throw new ArgumentException();
+                }
+                health = value;
+            }
+        }
+        // только для чтения
+        public bool IsAlive => Health > 0;
+        // констурктор
+        public Player(string name, int level, int health)
+        {
+            Name = name;
+            Level = level;
+            Health = health;
+        }
+        public void TakeDamage(int damage)
+        {
+            if (damage < 0)
+            {
+                if (health > 0)
+                {
+                    health = 0;
+                    Console.WriteLine($"Игрок: {Name}, уровень:{damage}, здоровье: {Health}.  Жив:{IsAlive}");
+                }
+            }
+        }
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Player player = new Player("Татьяна", 68, 100);
+                player.TakeDamage(28);// урон
+                player.TakeDamage(80); // урон
+
+                // уровень ниже 1
+                try
+                {
+                    player.Level = 0; // вызывает исключение
+                }
+                catch(ArgumentOutOfRangeException ex)
+                {
+                    Console.WriteLine(ex.Message);// обрабатывает исключение
+                }
+                Console.WriteLine($"{player.Name} живой:{player.IsAlive}");
+            }
+        }
+    }
+}
