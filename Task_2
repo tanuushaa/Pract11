@@ -1,0 +1,58 @@
+namespace ConsoleApp39
+{
+    class Phone
+    { // поле
+        private int battery;
+        // свойства для доступа к полю
+        public int BatteryLevel 
+        {
+            get { return battery; }
+            set 
+            {
+                if ( value < 0 || value > 100)
+                {
+                    Console.WriteLine("Уровень заряда должен быть в диапозоне от 0 до 100");
+                }
+                battery = value;
+            }
+        }
+        // авто-свойство для бренда
+        public string Brand { get; init; }
+        public Phone ( string brand, int initialBattery)
+        {
+            Brand = brand;
+            BatteryLevel = initialBattery;
+        }
+        public void Use()
+        {
+            if (battery >= 10)
+            {
+                battery -= 10;
+                Console.WriteLine($"{Brand}: заряд {BatteryLevel}%");
+            }
+            else
+            {
+                Console.WriteLine($"{Brand} недостаточно заряда для использования");
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Phone myPhone = new Phone("Iphone", 99);
+                myPhone.Use();
+                myPhone.Use();
+                myPhone.Use();
+                myPhone.BatteryLevel = 150;
+                myPhone.Use();
+            }
+            catch(ArgumentOutOfRangeException ex)
+            { 
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+}
