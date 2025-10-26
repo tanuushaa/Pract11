@@ -1,0 +1,49 @@
+namespace ConsoleApp41
+{
+    class Book 
+    { // поле
+        private string title;
+        // свойство для поля
+        public string Title
+        {
+            get => title;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value)) // проверка на ноль
+                {
+                    Console.WriteLine("Название книги  не может быть пустым или null");
+                }
+                title = value;
+            }
+        }
+        // авто-свойство для колличества страниц
+        public int Pages { get; set; } = 1;
+        // свойство для чтения( определяет длинная ли книга)
+        public bool IsLong => Pages > 300;
+        public Book (string title)
+        {
+            this.title = title;
+        }
+        public void Info()
+        {
+            Console.WriteLine($"Книга: {Title}, страниц: {Pages},длинная: {(IsLong ? "да" : "нет")}");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Book myBook = new Book("Война и мир");
+                myBook.Info();
+                myBook.Title = " ";
+                myBook.Info();
+            }
+            catch(ArgumentException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+}
