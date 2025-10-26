@@ -1,0 +1,55 @@
+namespace ConsoleApp38
+{
+    class Car 
+    {
+        private int speed;
+        public int Speed
+        {
+            get { return speed; }
+            set {
+                if (value < 0 || value > 300)
+                {
+                    Console.WriteLine("Скорость не может привышать 300! ");
+                }
+                speed = value;
+            }
+        }
+        public string Model { get; set; } = "Unknown";
+        public Car(string model, int speed)
+        {
+            this.Model = model;
+            this.Speed = speed;
+        }
+        public void Drive()
+        {
+            Console.WriteLine($"{Model} едет со скоростью  {speed} км/ч.");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                Car myCar = new Car("BMW", 120);
+                myCar.Drive();
+                myCar.Speed = 400;
+                myCar.Drive();
+            }
+            catch(ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            try
+            {
+                Car myCar2 = new Car("BMW", -60);
+                myCar2.Drive();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+}
